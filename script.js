@@ -1,5 +1,7 @@
 'use strict';
 
+const MOBILE_MAX_WIDTH = 767;
+
 const menu = document.querySelector('.menu');
 const openMenuBtn = document.querySelector('.page-header__button');
 const closeMenuBtn = document.querySelector('.page-header__button--close-menu');
@@ -7,6 +9,14 @@ const menuListDesktop = document.querySelector('.menu__list--desktop');
 const menuListMobile = document.querySelector('.menu__list--mobile');
 
 const openMenu = function () {
+    if (document.body.offsetWidth > MOBILE_MAX_WIDTH) {
+        // getScrollbarWidth();
+        // document.body.style.paddingRight = getScrollbarWidth() + 'px';
+      } else {
+        scrollY = window.scrollY;
+        document.body.style.top = '-' + scrollY + 'px';
+      }
+  
     if (menu.classList.contains('animate__fadeOutRightBig')) {
         menu.classList.remove('animate__fadeOutRightBig');
     }
@@ -16,6 +26,10 @@ const openMenu = function () {
 };
 
 const closeMenu = function () {
+    if (document.body.offsetWidth <= MOBILE_MAX_WIDTH) {
+        window.scrollTo(0, parseInt(scrollY || '0', 10));
+      }
+  
     menu.classList.remove('animate__fadeInRightBig');
     menu.classList.add('animate__fadeOutRightBig');
     setTimeout(() => menu.classList.remove('menu--opened'), 1000);
